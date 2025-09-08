@@ -38,10 +38,10 @@
      * git config --global user.name  : ellenorizni v beallitani
      * git config --global user.email : ellenorizni v beallitani
      * git branch -M main : branchben a foagn elnevezese
-     * git push -u origin main  : a helyi repo valtozasait feltolti a repora
+     * git push -u origin main  : a helyi repo valtozasait feltolti a tavoli repora
      * 
      * HF töltsd le otthon a repot a sajat htdocs mappadba
-     * 
+     * git clone https...
      * 
     */
 ?>
