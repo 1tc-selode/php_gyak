@@ -68,5 +68,5 @@
         echo"{$student['name']} : {$student['age']}<br>";
     }
 
-    //hf users tomb ami lehetove teszi az autehtikáciot
+    //hf users tomb ami lehetove teszi az autehtikáciot, foreachel irasd ki
 ?>
