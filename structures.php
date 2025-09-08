@@ -67,4 +67,6 @@
     foreach ($students as $student) {
         echo"{$student['name']} : {$student['age']}<br>";
     }
+
+    //hf users tomb ami lehetove teszi az autehtikáciot
 ?>
