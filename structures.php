@@ -67,6 +67,30 @@
     foreach ($students as $student) {
         echo"{$student['name']} : {$student['age']}<br>";
     }
-
+    echo "<br>";
     //hf users tomb ami lehetove teszi az autehtikáciot, foreachel irasd ki
+        $auth_users = [
+        [
+            "name" => "Kovács Péter",
+            "email" => "peter@example.com",
+            "phone" => "+36301234567",
+            "password" => "titok123"
+        ],
+        [
+            "name" => "Kiss Éva",
+            "email" => "eva@example.com",
+            "phone" => "+36301112222",
+            "password" => "jelszo456"
+        ],
+        [
+            "name" => "Nagy Géza",
+            "email" => "geza@example.com",
+            "phone" => "+36303334444",
+            "password" => "pass789"
+        ]
+    ];
+
+    foreach ($auth_users as $user) {
+        echo "Név: {$user['name']}, Email: {$user['email']}, Telefonszám: {$user['phone']}, Jelszó: {$user['password']}<br>";
+    }
 ?>
