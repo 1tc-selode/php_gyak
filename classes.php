@@ -1,4 +1,4 @@
-<?php
+ <?php
 
     /*osztaly
     - osztaly: sablonm/tervrajz 
@@ -86,4 +86,4 @@
     $admin = new Admin();
     $admin->greet("Pisti");
 
-?>
+?> */
