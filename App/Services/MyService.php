@@ -1,14 +1,14 @@
 <?php
 
     namespace App\Services;
-    use App\Traits\GreetingTraits;
-    use App\Traits\LoggerTraits;
+    use App\Traits\GreetingTrait;
+    use App\Traits\LoggerTrait;
 
     class MyService {
         use GreetingTrait, LoggerTrait;
 
         public function run($name="User") {
-            $this->log("Service elindult");
+            $this->log("Service elindult<br>");
             $this->sayHello($name);
         }
     }
