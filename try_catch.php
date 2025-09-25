@@ -3,6 +3,7 @@
     $logFile = "log.txt";
     $message = "";
     $error = "";
+    $currentContent = "";
     try{
         if(file_exists($dataFile)){
             $currentContent = file_get_contents($dataFile);
@@ -13,7 +14,16 @@
             $new_data = $_POST['newdata'];
             if(file_put_contents($dataFile, $new_data) != false){
                 $message = "Sikeres módosítás!";
-            } 
+                $currentContent = $new_data;
+                //naplozas
+                $currentTime = date('Y-m-d H:i:s');
+                $logEntry = "[{$currentTime}] modositas: az '{$dataFile} fajl tartalma modositva'";
+                if (file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX) == false){
+                    throw new Exception("nem sikerult a naplozas a $dataFile -ba ");
+                }
+            }else {
+            throw new Exception("A $dataFile kiirasa nem sikerult");
+        } 
         }
     } catch (Exception $ex){
         $error = "Hiba történt: " . $ex->getMessage();
@@ -26,6 +36,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Try catch</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple-v1.css">
 </head>
 <body>
     <h2>Fájlkezelés</h2>
@@ -37,9 +48,7 @@
     <h2>Módosítás</h2>
     <form action="" method="post">
         <label for="newdata">új adatok nev kor formatumban</label><br>
-        <textarea name="newdata" id="newdata" type="text" cols="30" rows="10">
-            <?php echo htmlspecialchars($currentContent) ?>
-        </textarea>
+        <textarea name="newdata" id="newdata" type="text" cols="30" rows="10"><?php echo htmlspecialchars($currentContent) ?></textarea>
         <button type="submit">Mentés</button>
     </form>
 </body>
