@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple-v1.css">
 <?php
 
 /**
@@ -42,36 +43,54 @@ try{
     //Hiba mód : exception dobasa hiba eseten;
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "sikeres kapcs";
+
+    //xss vedekezes a htmlspecialchars-al
+    //xss($pdo);
+
+    //sql_injection
+    sql_injection($pdo);
+
 } catch(PDOException $ex){
     echo "kapcs hiba {$ex->getMessage()}";
     exit();
 }
 
-$name="odett";
-$companyName="idk";
-$phone="06205667898";
-$email="valami@gmail.com";
-$photo=null;
-$note="webfejleszto";
 
-//$sql = "INSERT INTO cards(`name`,companyName,phone,email,photo,note)
-//        VALUES ('$name','$companyName','$phone','$email','$photo','$note')";
+function xss($pdo){
+    $name="odett";
+    $companyName=htmlspecialchars("<script>alert(\"idk\")</script>");
+    $phone="06205667898";
+    $email="valami@gmail.com";
+    $photo=null;
+    $note="webfejleszto";
 
-//$pdo->exec($sql);
+    $sql = "INSERT INTO cards(`name`,companyName,phone,email,photo,note)
+            VALUES ('$name','$companyName','$phone','$email','$photo','$note')";
 
-$sql = "INSERT INTO cards(`name`,companyName,phone,email,photo,note)
-        VALUES (?,?,?,?,?,?)";
+    $pdo->exec($sql);
 
-$stmt = $pdo->prepare($sql);
+    $sql = "SELECT * FROM cards WHERE name = 'odett'";
 
-$stmt->execute([$name,$companyName,$phone,$email,$photo,$note]);
+    $result = $pdo->query($sql);
+    $card = $result->fetch(PDO::FETCH_ASSOC);
+    echo "<br>";
+    print_r($card);
+}
 
 
-/*$sql = "SELECT * FROM cards WHERE id=11";
+function sql_injection($pdo){
+    $name_i="' OR '1' = '1";
+    $sql = "SELECT * FROM cards WHERE name = '$name_i'";
+    $result = $pdo->query($sql);
+    $card = $result->fetchAll(PDO::FETCH_ASSOC);
+    echo "<br>";
+    print_r($card);
 
-$result = $pdo->query($sql);
-$card = $result->fetch(PDO::FETCH_ASSOC);
-echo "<br>";
-print_r($card);*/
 
+    //$sql = "INSERT INTO cards(`name`,companyName,phone,email,photo,note)
+    //        VALUES (?,?,?,?,?,?)";
+
+    //$pdo->exec($sql);
+
+}
 ?>
