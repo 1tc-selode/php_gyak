@@ -48,7 +48,12 @@ try{
     //xss($pdo);
 
     //sql_injection
-    sql_injection($pdo);
+    //sql_injection($pdo);
+
+    //vedekezes sql_injection ellen
+    //prepared_statement($pdo);
+
+    checked_insert($pdo);
 
 } catch(PDOException $ex){
     echo "kapcs hiba {$ex->getMessage()}";
@@ -77,20 +82,31 @@ function xss($pdo){
     print_r($card);
 }
 
-
-function sql_injection($pdo){
+//funciton sql_injection($pdo){
+function prepared_statement($pdo){
     $name_i="' OR '1' = '1";
-    $sql = "SELECT * FROM cards WHERE name = '$name_i'";
-    $result = $pdo->query($sql);
-    $card = $result->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT * FROM cards WHERE name = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt -> execute([$name_i]);
+
+    $card = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<br>";
     print_r($card);
 
 
-    //$sql = "INSERT INTO cards(`name`,companyName,phone,email,photo,note)
-    //        VALUES (?,?,?,?,?,?)";
+    //$sql = "INSERT INTO cards(`name`,companyName,phone,email,photo,note) VALUES (?,?,?,?,?,?)";
 
     //$pdo->exec($sql);
+
+}
+
+function checked_insert($pdo){
+    $name=htmlspecialchars("odett");
+    $companyName=htmlspecialchars("<script>alert(\"idk\")</script>");
+    
+    $sql = "INSERT INTO cards(`name`,companyName) VALUES (?,?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt -> execute([$name, $companyName]);
 
 }
 ?>
