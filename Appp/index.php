@@ -30,4 +30,14 @@ try {
     die("Adatbázis kapcsolat sikertelen: " . $e->getMessage());
 }
 
+$sql = "CREATE TABLE IF NOT EXISTS business_cards (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    company VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;";
+
+$pdo->exec($sql);
 ?>
