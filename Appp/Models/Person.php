@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple-v1.css">
 <?php
-
     namespace Appp\Models;
 
     class Person{
